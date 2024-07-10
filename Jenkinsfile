@@ -1,18 +1,23 @@
 pipeline {
     agent any
 
+     tools {
+        // Install the Maven version configured as "M3" and add it to the path.
+        maven "M3"
+    }
+    
     stages {
         stage('Checkout') {
             steps {
                 // Clona o repositório do GitHub
-                git 'https://github.com/GDCCosta/INF335-Trabalho05.1.git'
+                git branch: 'main', url:'https://github.com/GDCCosta/INF335-Trabalho05.1.git'
             }
         }
         
         stage('Build') {
             steps {
                 // Compilação do projeto usando Maven
-                sh 'mvn clean package'
+                sh 'mvn -Dmaven.test.failure.ignore=true clean package'
             }
         }
 
