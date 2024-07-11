@@ -27,7 +27,7 @@ pipeline {
                 sh 'mvn test'
                 
                 // Arquivo JUnit XML para relatório de testes
-                junit 'target/surefire-reports/TEST-*.xml'
+                junit '**/target/surefire-reports/TEST-*.xml'
             }
         }
     }
@@ -35,8 +35,8 @@ pipeline {
     post {
         always {
             // Sempre execute este passo, independentemente do resultado
-            archiveArtifacts artifacts: 'target/*.jar', allowEmptyArchive: true
-            junit 'target/surefire-reports/TEST-*.xml'
+            junit '**/target/surefire-reports/TEST-*.xml'
+            archiveArtifacts 'target/*.jar'
         }
 
         success {
