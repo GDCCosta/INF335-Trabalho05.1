@@ -1,4 +1,4 @@
-pipeline {
+-app/pipeline {
     agent any
 
     tools {
@@ -20,9 +20,9 @@ pipeline {
 
             post {
                 // Publica os resultados dos testes JUnit localizados nos arquivos XML dentro do diretório
-                junit '**/target/surefire-reports/TEST-*.xml'
+                junit '**/meu-app/target/surefire-reports/TEST-*.xml'
                 // Arquiva os artefatos gerados (arquivos .jar) que estão no diretório
-                archiveArtifacts 'target/*.jar'
+                archiveArtifacts 'meu-app/target/*.jar'
             }
         }
     }
