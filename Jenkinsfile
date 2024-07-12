@@ -10,7 +10,7 @@
         stage('Build') {
             steps {
                 // Clona o repositório do GitHub especificado
-                git branch: 'main', url: 'https://github.com/GDCCosta/INF335-Trabalho05.1.git'
+                git branch: 'main', url: 'https://github.com/GDCCosta/INF335-Trabalho05.1'
                 
                 // Execute o Maven em um agente Unix.
                 // Executa o Maven para limpar o projeto, compilar e empacotar.
