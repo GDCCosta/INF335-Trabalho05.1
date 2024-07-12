@@ -16,12 +16,12 @@ import br.unicamp.ic.inf335.beans.ProdutoBean;
 
 class AnuncianteBeanTest {
 
-	private AnuncianteBean anunciante;
-	private String nome;
+    private AnuncianteBean anunciante;
+    private String nome;
     private String CPF;
     private ArrayList<AnuncioBean> anuncios;
 
-	@BeforeEach
+    @BeforeEach
     public void setUp() {
 		
 		// Configura��o inicial para cada teste
