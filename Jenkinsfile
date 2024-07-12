@@ -1,4 +1,4 @@
--app/pipeline {
+pipeline {
     agent any
 
     tools {
