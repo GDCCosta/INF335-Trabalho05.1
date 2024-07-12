@@ -1,52 +1,35 @@
 pipeline {
-    agent any
+    agent any
 
-     tools {
-        // Install the Maven version configured as "M3" and add it to the path.
-        maven "M3"
-    }
-    
-    stages {
-        stage('Checkout') {
-            steps {
-                // Clona o repositório do GitHub
-                git branch: 'main', url:'https://github.com/GDCCosta/INF335-Trabalho05.1.git'
-            }
-        }
-        
-        stage('Build') {
-            steps {
-                // Compilação do projeto usando Maven
-                sh 'mvn -Dmaven.test.failure.ignore=true clean package'
-            }
-        }
+    tools {
+        // Instala a versão do Maven configurada como "M3" e a adiciona ao path.
+        maven "M3"
+    }
 
-        stage('Run Test') {
-            steps {
-                // Execução dos testes JUnit
-                sh 'mvn test'
-                
-                // Arquivo JUnit XML para relatório de testes
-                junit '**/target/surefire-reports/TEST-*.xml'
-            }
-        }
-    }
+    stages {
+        stage('Build') {
+            steps {
+                // Clona o repositório do GitHub especificado
+                git 'https://github.com/GDCCosta/INF335-Trabalho05.1.git'
+            }
+        }
 
-    post {
-        always {
-            // Sempre execute este passo, independentemente do resultado
-            junit '**/target/surefire-reports/TEST-*.xml'
-            archiveArtifacts 'target/*.jar'
-        }
+        stage('Run Tests') {
+            steps {
+                //Execute o Maven em um agente Unix.
+                //Executa o Maven para limpar o projeto, compilar e empacotar.
+                // O parâmetro -Dmaven.test.failure.ignore=true indica para o Maven ignorar falhas nos testes unitários e continuar a execução.
+                sh 'mvn -Dmaven.test.failure.ignore=true clean package'
+            }
+        }
+    }
 
-        success {
-            // Ações a serem tomadas se o Pipeline for bem-sucedido
-            echo 'Pipeline bem-sucedido!'
-        }
-
-        failure {
-            // Ações a serem tomadas se o Pipeline falhar
-            echo 'Pipeline falhou :('
-        }
-    }
+    post {
+        //Publica os resultados dos testes JUnit localizados nos arquivos XML dentro do diretório
+        // Arquiva os artefatos gerados (arquivos .jar) que estão no diretório
+        success {
+            junit '**/target/surefire-reports/TEST-*.xml'
+            archiveArtifacts 'target/*.jar'
+        }
+    }
 }
